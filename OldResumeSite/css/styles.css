@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Sep 7, 2017, 4:05:24 PM
+    Author     : JimmyD
+*/
+
+
+.collapsible {
+    background-color: #777;
+    color: white;
+    cursor: pointer;
+    padding: 18px;
+    width: 100%;
+    border: none;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+}
+
+.active, .collapsible:hover {
+    background-color: #555;
+}
+
+.content {
+    padding: 0 18px;
+    display: none;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+table, tr, td, th
+{
+    border: 1px solid black;
+    border-collapse:collapse;
+}
+tr.header
+{
+    cursor:pointer;
+}
