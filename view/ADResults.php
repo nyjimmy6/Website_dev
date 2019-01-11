@@ -38,6 +38,7 @@ $decodeJSON = json_decode($query, true);
 //setting variables for ADInfo level
 $clearJSON = $decodeJSON['ADinfo'];
 
+//test
 //setting so variables will be able to pull associative index
 $outJSON = $clearJSON[0];
 $fullname = $outJSON['DisplayName'];
