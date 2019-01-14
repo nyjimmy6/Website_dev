@@ -51,7 +51,7 @@ for ($x = 0; $x < $GroupLength; $x++) {
     $newArr[$x] = $value;
     // echo $newArr[$x];
 }
-
+//var_dump($newArr);
 
 
 ?>
@@ -87,11 +87,11 @@ for ($x = 0; $x < $GroupLength; $x++) {
 
                 }
             ?>
-            <div class="m-md-3 row">
+            <!--<div class="m-md-3 row">
                 <div class="col">
                     <b>Office Location: </b><p> Test</p>
                 </div>
-            </div>
+            </div>-->
 
 
 
@@ -107,15 +107,22 @@ for ($x = 0; $x < $GroupLength; $x++) {
 
     </tr>
     </thead>
+
     <tbody>
-    <tr>
-        <td>Mark</td>
-        <td>Otto</td>
-    </tr>
-    <tr>
-        <td>Jacob</td>
-        <td>Thornton</td>
-    </tr>
+    <?php
+    $lengthADArray = count($newArr);
+    for ($x = 0; $x <$lengthADArray; $x++) {
+
+        echo '<tr>';
+
+
+            echo '<td>' . $newArr[$x] . '</td>';
+
+
+        echo '</tr>';
+    }
+    ?>
+
     </tbody>
 </table>
 

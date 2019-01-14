@@ -79,6 +79,33 @@ function checkFlagType()
 
 
 }
+function lastNameReturn($searchInput)
+{
+    $userID = $searchInput;
+
+    $psPath = "../powershell/powershellSearch.ps1";
+
+    $query = shell_exec("powershell -command $psPath -userID $userID");
+
+    // var_dump($query);
+
+    //have to trim query variable because powershell or PHP likes to throw in space at the end
+    $test = rtrim($query);
+    //var_dump($test);
+
+    if ($test == "no") {
+        include '../view/nosearchresults.php';
+
+    } else {
+        //reminder to decode json when it arrives ----
+        $decodeJSON = json_decode($query, true);
+
+        include '../view/ADResults.php';
+
+    }
+
+
+}
 function showADResults($flagSearch)
 {
     if ($flagSearch == 1) {
@@ -136,7 +163,37 @@ function showADResults($flagSearch)
     }
     elseif($flagSearch == 3)
     {
+        $inputLastName = $_GET['searchInput'];
 
+        $psPath = "../powershell/LastNameSearch.ps1";
+
+        $query = shell_exec("powershell -command $psPath -lastName $inputLastName");
+
+        // var_dump($query);
+        $decodeJSON = json_decode($query, true);
+        //have to trim query variable because powershell or PHP likes to throw in space at the end
+        $test = rtrim($query);
+       // var_dump($decodeJSON[0]);
+
+        if ($test == "no") {
+            include '../view/nosearchresults.php';
+
+        }
+        elseif (is_null($decodeJSON[0]))
+        {
+            //print_r ("returning null");
+            //include '../controller/controller.php?action=adresults&searchInput=' . $decodeJSON['Name'] . '&flagtype=1';
+
+            lastNameReturn($decodeJSON['Name']);
+
+        }
+        else {
+            //reminder to decode json when it arrives ----
+
+
+            include '../view/select_User.php';
+
+        }
     }
 }
 

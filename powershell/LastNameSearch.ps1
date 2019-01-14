@@ -1,19 +1,36 @@
-﻿$lastName = @()
+﻿param([string]$lastName) 
 
-$lastName = Get-ADUser -Filter {Surname -eq "Allen"} -Properties DisplayName, EmployeeID, EmailAddress | Select DisplayName, EmployeeID, EmailAddress
-
-$countResults = $lastName.Length
-
-if($countResults -lt 1)
-
+#$lastNameOUT = @{}
+#$lastName = "Mentzer"
+try
 {
-    Write-Host "Success"
-    return $lastName | ConvertTo-Json
+    #$lastName = "asdf"
+
+    $output = Get-ADUser -Filter {Surname -eq $lastName} -Properties DisplayName, Name, EmailAddress| Select DisplayName, Name, EmailAddress
+
+    $count = $output.Length
+   # Write-Host $count
+    if($output -eq $null)
+    {
+        return 'no'
+    }
+    elseif($count -lt 1)
+    {
+        
+        #$output += 1
+        #Write-Host $output[1]
+        
+        return $output | ConvertTo-Json
+    }
+    else
+    {
+        #Write-Host $countResults
+        return $output | ConvertTo-Json
+    }
 }
-else
+catch
 {
-    Write-Host $countResults
-    return $lastName | ConvertTo-Json
+    Return 'no'
 }
 
 
