@@ -78,14 +78,5 @@
 
 <div id="error"></div>
 
-<script>
-    function displayTest(){
-        $("#loadMessage").show();
-        setTimeout(loadDoc(), 10000);
-    }
 
-
-
-
-</script>
 <?php include 'footer.php'; ?>

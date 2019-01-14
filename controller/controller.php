@@ -38,7 +38,7 @@
                     include '../view/ADWebSearch.php';
                     break;
                 case 'adresults':
-                    include '../view/ADResults.php';
+                    checkFlagType();
                     break;
 
 
@@ -57,6 +57,88 @@
                     getCompanyData();
                     break;
             }
+
+function checkFlagType()
+{
+    $flag = $_GET['flagtype'];
+
+    if($flag == 1)
+    {
+        showADResults($flag);
+
+    }
+    elseif ($flag == 2)
+    {
+        showADResults($flag);
+    }
+    else
+    {
+        showADResults($flag);
+
+    }
+
+
+}
+function showADResults($flagSearch)
+{
+    if ($flagSearch == 1) {
+
+        $userID = $_GET['searchInput'];
+
+        $psPath = "../powershell/powershellSearch.ps1";
+
+        $query = shell_exec("powershell -command $psPath -userID $userID");
+
+        // var_dump($query);
+
+        //have to trim query variable because powershell or PHP likes to throw in space at the end
+        $test = rtrim($query);
+        //var_dump($test);
+
+        if ($test == "no") {
+            include '../view/nosearchresults.php';
+
+        } else {
+            //reminder to decode json when it arrives ----
+            $decodeJSON = json_decode($query, true);
+
+            include '../view/ADResults.php';
+
+        }
+
+    }
+    elseif($flagSearch == 2)
+    {
+
+        $empID = $_GET['searchInput'];
+
+        $psPath = "../powershell/powershell_EMP_ID_Search.ps1";
+
+        $query = shell_exec("powershell -command $psPath -employeeID $empID");
+
+        // var_dump($query);
+
+        //have to trim query variable because powershell or PHP likes to throw in space at the end
+        $test = rtrim($query);
+        //var_dump($test);
+
+        if ($test == "no") {
+            include '../view/nosearchresults.php';
+
+        } else {
+            //reminder to decode json when it arrives ----
+            $decodeJSON = json_decode($query, true);
+
+            include '../view/ADResults.php';
+
+        }
+
+    }
+    elseif($flagSearch == 3)
+    {
+
+    }
+}
 
 
 ?>

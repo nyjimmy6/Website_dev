@@ -1,15 +1,10 @@
 <?php
+//setting variables for ADInfo level
+$clearJSON = $decodeJSON['ADinfo'];
 
-$userID = $_GET['searchInput'];
-
-$psPath = "../powershell/powershellSearch.ps1";
-
-$query = shell_exec("powershell -command $psPath -userID $userID");
-
-
-//reminder to decode json when it arrives ----
-$decodeJSON = json_decode($query, true);
-
+//test
+//setting so variables will be able to pull associative index
+$outJSON = $clearJSON[0];
 
 //need to go down a level in array, probably because Powershell messing up JSON since its hash array
 //Because Hash array first level, second level was AD group and Adinfo seperation, and powershell will return an array into that as the 3rd level
@@ -35,15 +30,11 @@ $decodeJSON = json_decode($query, true);
  *
  */
 
-//setting variables for ADInfo level
-$clearJSON = $decodeJSON['ADinfo'];
 
-//test
-//setting so variables will be able to pull associative index
-$outJSON = $clearJSON[0];
+
 $fullname = $outJSON['DisplayName'];
-$emailAddress =$outJSON['EmailAddress'];
-$lockStatus =$outJSON['LockedOut'];
+$emailAddress = $outJSON['EmailAddress'];
+$lockStatus = $outJSON['LockedOut'];
 $ExpiredPassword = $outJSON['PasswordExpired'];
 
 $clearADGroup_JSON = $decodeJSON['ADGroups'];
@@ -53,15 +44,16 @@ $GroupLength = count($clearADGroup_JSON);
 //initializing new array to make one dimension array
 $newArr = array();
 //looping through $clearADGroup_JSON
-for($x = 0; $x < $GroupLength; $x++)
-{
+for ($x = 0; $x < $GroupLength; $x++) {
     //grabbing value from incrementing index and the key inded
     $value = $clearADGroup_JSON[$x]['name'];
     //assigning value into the new array
     $newArr[$x] = $value;
-   // echo $newArr[$x];
+    // echo $newArr[$x];
 }
-echo $newArr[1];
+
+
+
 ?>
 
 <div class = "container">

@@ -1,6 +1,6 @@
 ﻿$lastName = @()
 
-$lastName = Get-ADUser -Filter {Surname -eq "Glover"} -Properties DisplayName, EmployeeID, EmailAddress | Select DisplayName, EmployeeID, EmailAddress
+$lastName = Get-ADUser -Filter {Surname -eq "Allen"} -Properties DisplayName, EmployeeID, EmailAddress | Select DisplayName, EmployeeID, EmailAddress
 
 $countResults = $lastName.Length
 

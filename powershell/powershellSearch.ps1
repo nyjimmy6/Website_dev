@@ -2,7 +2,7 @@
 
 $output = ""
 
-$userID = "AA1379"
+#$userID = "asdf"
 $innerArray = @()
 $ADGroups = @()
 $output = @{
@@ -12,29 +12,35 @@ ADGroups = @()
 
 }
 
-
-
-$output.ADinfo += Get-ADUser -Filter {Name -eq $userID} -Properties DisplayName, Surname , EmailAddress, LockedOut, PasswordExpired | Select DisplayName, EmailAddress, LockedOut, PasswordExpired
-$ADGroupsOutPut = Get-ADPrincipalGroupMembership $userID | select name
-
-
-foreach($group in $ADGroupOutPut)
+try
 {
-    $ADGroups += $group.name
+
+    $output.ADinfo += Get-ADUser -Filter {Name -eq $userID} -Properties DisplayName, EmailAddress, LockedOut, PasswordExpired | Select DisplayName, EmailAddress, LockedOut, PasswordExpired
+    $ADGroupsOutPut = Get-ADPrincipalGroupMembership $userID | select name
+
+
+    foreach($group in $ADGroupOutPut)
+    {
+        $ADGroups += $group.name
+    }
+
+    $output.ADGroups += $ADGroupsOutPut
+
+    If($output -eq $Null)
+    {
+        Return "No User found"
+
+    }
+    Else
+    {
+      # return $output | ConvertTo-Json
+       #return $ADGroupOutPut |ConvertTo-Json
+       return $output | ConvertTo-Json
+    }
 }
-
-$output.ADGroups += $ADGroupsOutPut
-
-If($output -eq $Null)
+catch
 {
-    Return "No User Found"
-
-}
-Else
-{
-  # return $output | ConvertTo-Json
-   #return $ADGroupOutPut |ConvertTo-Json
-   return $output | ConvertTo-Json
+    Return 'no'
 }
 
 
